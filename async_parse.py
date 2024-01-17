@@ -1,8 +1,12 @@
-import time
+import sys
 import re
 import json
 import asyncio
 from playwright.async_api import async_playwright as pl
+
+
+assert sys.argv[1], "there is no args"
+article = int(sys.argv[1])
 
 
 scroll_down = '''
@@ -25,6 +29,8 @@ links = dict()
 
 
 async def parse_html(page):
+    """Find all links in raw HTML by regular expression (re)."""
+
     a_handle = await page.evaluate_handle("document.body")
     result_handle = await page.evaluate_handle("body => body.innerHTML", a_handle)
     html = str(await result_handle.json_value())
@@ -79,4 +85,4 @@ async def main(article: int):
 
 
 if __name__ == "__main__":
-    asyncio.run(main=main(article=1216206053))
+    asyncio.run(main=main(article=article))
