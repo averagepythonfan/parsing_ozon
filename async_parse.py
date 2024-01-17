@@ -2,6 +2,7 @@ import sys
 import re
 import json
 import asyncio
+import random
 from playwright.async_api import async_playwright as pl
 
 
@@ -66,6 +67,7 @@ async def main(article: int):
     url = "https://www.ozon.ru/product/" + str(article)
 
     await page.goto(url, wait_until="load")
+    await asyncio.sleep(1.5)
 
     await page.evaluate(scroll_down)
     await page.locator('div[style*="grid-template-columns: repeat(9, minmax(56px, 90px));"]').click(delay=1)
@@ -75,8 +77,9 @@ async def main(article: int):
     for _ in range(20):
         await parse_html(page=page)
         await page.keyboard.press("PageDown", delay=0.8)
-        await asyncio.sleep(1.5)
-    
+        sleep = random.uniform(1.5, 3)
+        await asyncio.sleep(sleep)
+
     await page.close()
     await pl_ctx.stop()
 
