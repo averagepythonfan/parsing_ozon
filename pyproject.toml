@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "parse-ozon"
+version = "0.1.0"
+description = ""
+authors = ["averagepythonfan <djonvorobei@bk.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^4.0.10"
+
+
+[tool.poetry.group.guru.dependencies]
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+
+
+[tool.poetry.group.sel.dependencies]
+
+
+[tool.poetry.group.play.dependencies]
+pytest-playwright = "^0.4.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

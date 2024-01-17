@@ -1,0 +1,5 @@
+docker/
+lab/
+parse_ozon/
+docker-compose.yml
+tests/
