@@ -18,11 +18,25 @@ beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
 
 
-[tool.poetry.group.sel.dependencies]
-
-
 [tool.poetry.group.play.dependencies]
 pytest-playwright = "^0.4.3"
+fastapi = "^0.109.0"
+uvicorn = "^0.26.0"
+celery = "^5.3.6"
+redis = "^5.0.1"
+
+
+
+[tool.poetry.group.model.dependencies]
+torch = {version = "^2.1.2+cpu", source = "pytorch-cpu"}
+torchvision = {version = "^0.16.2+cpu", source = "pytorch-cpu"}
+torchaudio = {version = "^2.1.2+cpu", source = "pytorch-cpu"}
+transformers = "^4.36.2"
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]
