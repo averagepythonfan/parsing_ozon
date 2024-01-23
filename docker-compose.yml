@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  detector:
+    build:
+      context: .
+      dockerfile: docker/detector.Dockerfile
+    container_name: detector
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 4096M
+        reservations:
+          cpus: "0.25"
+          memory: 1024M
+    volumes:
+      - "./detector:/app/detector"
+    ports:
+      - "9090:9090"
+    entrypoint: uvicorn detector.main:app --host 0.0.0.0 --port 9090 --reload
