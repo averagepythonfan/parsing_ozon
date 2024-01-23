@@ -1,5 +1,11 @@
-docker/
 lab/
 parse_ozon/
-docker-compose.yml
 tests/
+model/
+scripts/__pycache__
+detector/__pycache__
+detector/dependencies/__pycache__
+detector/misc/__pycache__
+detector/routers/__pycache__
+detector/services/__pycache__
+detector/schemas/__pycache__

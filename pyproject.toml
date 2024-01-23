@@ -20,11 +20,6 @@ requests = "^2.31.0"
 
 [tool.poetry.group.play.dependencies]
 pytest-playwright = "^0.4.3"
-fastapi = "^0.109.0"
-uvicorn = "^0.26.0"
-celery = "^5.3.6"
-redis = "^5.0.1"
-
 
 
 [tool.poetry.group.model.dependencies]
@@ -32,6 +27,21 @@ torch = {version = "^2.1.2+cpu", source = "pytorch-cpu"}
 torchvision = {version = "^0.16.2+cpu", source = "pytorch-cpu"}
 torchaudio = {version = "^2.1.2+cpu", source = "pytorch-cpu"}
 transformers = "^4.36.2"
+huggingface-hub = "^0.20.2"
+
+
+[tool.poetry.group.base.dependencies]
+fastapi = "^0.109.0"
+uvicorn = "^0.26.0"
+celery = "^5.3.6"
+redis = "^5.0.1"
+aiohttp = "^3.9.1"
+
+
+
+[tool.poetry.group.bot.dependencies]
+aiogram = "^3.3.0"
+
 
 [[tool.poetry.source]]
 name = "pytorch-cpu"
