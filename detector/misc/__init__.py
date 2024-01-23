@@ -1,0 +1,1 @@
+from .misc import get_pic
