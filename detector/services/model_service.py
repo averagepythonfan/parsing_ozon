@@ -1,5 +1,4 @@
-from typing import List
-import torch
+from typing import List, Union
 from PIL.Image import Image
 from transformers import YolosImageProcessor, YolosForObjectDetection
 from detector.config import REPO_PATH
@@ -25,7 +24,7 @@ class ModelService(Singleton):
         return self.image_processor(images=image, return_tensors="pt")
 
 
-    def detect(self, images: List[Image]):
+    def detect(self, images: Union[List[Image], Image]):
         inputs = self._get_inputs(image=images)
         outputs = self.model(**inputs)
 

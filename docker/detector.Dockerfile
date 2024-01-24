@@ -6,7 +6,9 @@ COPY poetry.lock .
 COPY pyproject.toml .
 
 RUN poetry config virtualenvs.create false && \
-    poetry install --no-root --with base,model
+    poetry install --no-root --only model
+
+RUN poetry install --no-root --only base
 
 COPY scripts/ scripts/
 

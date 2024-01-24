@@ -7,3 +7,12 @@
 3. poetry run playwright install firefox
 3. python3 async_parse.py {article}
 4. parsed reviews in "result.json", scheme {"HASH": "LINK"}
+
+
+### Docker Compose Workflow
+
+- Prerequirements: docker, docker compose
+
+1. docker compose build detector
+2. docker compose up detector -d
+3. launch  "http://localhost:9090/docs"
