@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from typing import List, Union
 from PIL.Image import Image
 from transformers import YolosImageProcessor, YolosForObjectDetection
@@ -20,12 +21,8 @@ class ModelService(Singleton):
         self.image_processor = YolosImageProcessor.from_pretrained(repo_path, local_files_only=True)
 
 
-    def _get_inputs(self, image: Image):
-        return self.image_processor(images=image, return_tensors="pt")
-
-
     def detect(self, images: Union[List[Image], Image]):
-        inputs = self._get_inputs(image=images)
+        inputs = self.image_processor(images=images, return_tensors="pt")
         outputs = self.model(**inputs)
 
         results = self.image_processor.post_process_object_detection(
@@ -36,10 +33,35 @@ class ModelService(Singleton):
         responses = []
 
         for result in results:
+            human = False
             for score, label in zip(result["scores"], result["labels"]):
                 if self.model.config.id2label[label.item()] == "person" and round(score.item(), 3) > 0.9:
-                    responses.append("There is person on photo with confidence over 90%")
-                else:
-                    responses.append("Probably there is no any person on photo")
+                    human = True
+            if human:
+                responses.append("There is person on photo with confidence over 90%")
+            else:
+                responses.append("Probably there is no any person on photo")
 
         return responses
+
+
+    def from_pic(self, image: Image):
+        inputs = self.image_processor(images=image, return_tensors="pt")
+        outputs = self.model(**inputs)
+
+        results = self.image_processor.post_process_object_detection(
+            outputs,
+            threshold=0.9
+        )[0]
+
+        human = False
+        for score, label in zip(results["scores"], results["labels"]):
+            if self.model.config.id2label[label.item()] == "person" and round(score.item(), 3) > 0.8:
+                human = True
+        if human:
+            return "There is person on photo with confidence over 80%"
+        else:
+            raise HTTPException(
+                status_code=445,
+                detail="Probably there is no any person on photo"
+            )

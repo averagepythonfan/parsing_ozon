@@ -1,6 +1,6 @@
 from io import BytesIO
 from typing import Annotated
-from fastapi import APIRouter, Depends, File, HTTPException
+from fastapi import APIRouter, Depends, File
 from detector.misc import get_pic
 from detector.services import ModelService
 from detector.dependencies import get_model_service
@@ -20,13 +20,13 @@ async def detect_person(
     model: Annotated[ModelService, Depends(get_model_service)],
 ) -> list:
     
-    all_images = []
+    images = []
 
     for url in input.images:
         image: Image = await get_pic(url=url)
-        all_images.append(image)
+        images.append(image)
 
-    return model.detect(images=all_images)
+    return model.detect(images=images)
 
 
 @router.post("/from_file")
@@ -36,4 +36,4 @@ async def detect_from_file(
 ):
     pic = Image.open(BytesIO(file))
 
-    return model.detect(images=pic)
+    return model.from_pic(image=pic)
