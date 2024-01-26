@@ -9,3 +9,9 @@ detector/misc/__pycache__
 detector/routers/__pycache__
 detector/services/__pycache__
 detector/schemas/__pycache__
+parser/__pycache__
+parser/dependencies/__pycache__
+parser/misc/__pycache__
+parser/routers/__pycache__
+parser/services/__pycache__
+parser/schemas/__pycache__

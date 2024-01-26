@@ -8,7 +8,9 @@ COPY pyproject.toml .
 RUN poetry config virtualenvs.create false && \
     poetry install --no-root --only play
 
-RUN poetry run playwright install firefox
+RUN playwright install firefox && playwright install-deps 
+
+RUN poetry install --no-root --only base
 
 WORKDIR /app
 
