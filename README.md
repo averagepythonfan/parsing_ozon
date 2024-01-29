@@ -24,7 +24,7 @@
 import requests
 
 params = {
-    "chat_id": "your_id", #might get from tg: https://t.me/getmyid_bot
+    "user_id": "your_id", #might get from tg: https://t.me/getmyid_bot
     "images": [
         "https://sun9-50.userapi.com/impg/L7DtKyCbFQlSpdj0VDNaekK1KQcCGivnNEIQTA/2P2P0KFx3gM.jpg?size=2048x1536&quality=95&sign=ebac9dc1cd9d0b4ad8fb11f94adec62b&type=album",
         "https://sun9-43.userapi.com/impg/SpBoRQrcVzFaXGQrc49kGWAVaEPQplONnHzDKg/0N5XxkKO-ZQ.jpg?size=1432x2160&quality=95&sign=b3ed0acd37c240c1b65ca28897cc1e52&type=album",
