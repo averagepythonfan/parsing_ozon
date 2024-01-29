@@ -15,3 +15,4 @@ parser/misc/__pycache__
 parser/routers/__pycache__
 parser/services/__pycache__
 parser/schemas/__pycache__
+.env
