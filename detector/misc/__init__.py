@@ -1,1 +1,1 @@
-from .misc import get_pic
+from .misc import get_pic, send_to_user

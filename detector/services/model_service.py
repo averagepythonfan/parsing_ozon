@@ -43,6 +43,23 @@ class ModelService(Singleton):
                 responses.append("Probably there is no any person on photo")
 
         return responses
+    
+
+    def one_image(self, image: Image):
+        inputs = self.image_processor(images=image, return_tensors="pt")
+        outputs = self.model(**inputs)
+
+        results = self.image_processor.post_process_object_detection(
+            outputs,
+            threshold=0.9
+        )[0]
+
+        human = False
+        for score, label in zip(results["scores"], results["labels"]):
+            if self.model.config.id2label[label.item()] == "person" and round(score.item(), 3) > 0.9:
+                human = True
+
+        return human
 
 
     def from_pic(self, image: Image):
