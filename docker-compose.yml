@@ -27,10 +27,13 @@ services:
       context: .
       dockerfile: docker/parser.Dockerfile
     container_name: parser
+    environment:
+      TOKEN: ${TOKEN}
+    restart: on-failure
     deploy:
       resources:
         limits:
-          cpus: "0.50"
+          cpus: "0.30"
           memory: 2048M
         reservations:
           cpus: "0.25"
@@ -40,13 +43,13 @@ services:
     ports:
       - "8080:8080"
     entrypoint: uvicorn parser.main:app --host 0.0.0.0 --port 8080 --reload
-  lab:
-    build:
-      context: .
-      dockerfile: docker/lab.Dockerfile
-    container_name: parser_lab
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./lab:/app
-    entrypoint: jupyter lab --ip=0.0.0.0 --port=8080 --no-browser --allow-root
+  # lab:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/lab.Dockerfile
+  #   container_name: parser_lab
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./lab:/app
+  #   entrypoint: jupyter lab --ip=0.0.0.0 --port=8080 --no-browser --allow-root
