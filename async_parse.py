@@ -66,22 +66,30 @@ async def main(article: int):
 
     url = "https://www.ozon.ru/product/" + str(article)
 
+    print(f"Going to {article} article")
     await page.goto(url, wait_until="load")
     await asyncio.sleep(1.5)
 
+    print("Load page and wait some time")
+    
     await page.evaluate(scroll_down)
     await page.locator('div[style*="grid-template-columns: repeat(9, minmax(56px, 90px));"]').click(delay=1)
 
+    print("Click on locator")
+    
     await asyncio.sleep(1)
 
     for _ in range(20):
         await parse_html(page=page)
         await page.keyboard.press("PageDown", delay=0.8)
+        print(f"Earn {len(links)+1} links")
         sleep = random.uniform(1.5, 3)
         await asyncio.sleep(sleep)
 
     await page.close()
     await pl_ctx.stop()
+    
+    print("Close browser")
 
     with open('result.json', 'w') as fp:
         json.dump(links, fp)
