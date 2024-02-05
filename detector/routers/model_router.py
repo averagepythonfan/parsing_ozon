@@ -1,7 +1,7 @@
 from io import BytesIO
 from typing import Annotated
 from fastapi import APIRouter, Depends, File
-from detector.misc import get_pic, send_to_user
+from detector.misc import get_pic, send_to_user, user_feedback
 from detector.services import ModelService
 from detector.dependencies import get_model_service
 from detector.schemas import InputImages
@@ -25,7 +25,12 @@ async def detect_person(
 
     humans = []
 
-    for url in input.images:
+    for i, url in enumerate(input.images):
+        if i % 10 == 0:
+            await user_feedback(
+                user_id=input.user_id,
+                message=f"проверено {i} из {len(input.images)}, людей {len(humans)}"
+            )
         image: Image = await get_pic(url=url)
         if model.one_image(image=image):
             humans.append({
@@ -34,7 +39,8 @@ async def detect_person(
             })
         if len(humans) == 10:
             await send_to_user(input.user_id, humans)
-    
+            humans = []
+
     if len(humans) != 0:
         await send_to_user(input.user_id, humans)
 
