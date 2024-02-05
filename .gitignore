@@ -16,3 +16,7 @@ parser/routers/__pycache__
 parser/services/__pycache__
 parser/schemas/__pycache__
 .env
+bot/__pycache__
+bot/handlers/__pycache__
+bot/misc/__pycache__
+local_lab

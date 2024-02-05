@@ -38,3 +38,9 @@ params = {
 response = requests.post("http://localhost:9090/model/detect", json=params)
 
 ```
+
+## Jupyter Lab Workflow:
+
+1. poetry install --no-root --with dev,play
+2. poetry run jupyter lab
+3. open "local_run.ipynb"

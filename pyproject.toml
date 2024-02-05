@@ -6,7 +6,7 @@ authors = ["averagepythonfan <djonvorobei@bk.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.11"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -43,6 +43,11 @@ python-multipart = "^0.0.6"
 [tool.poetry.group.bot.dependencies]
 aiogram = "^3.3.0"
 
+
+
+[tool.poetry.group.cv.dependencies]
+tensorflow = "2.15"
+opencv-python = "^4.9.0.80"
 
 [[tool.poetry.source]]
 name = "pytorch-cpu"
