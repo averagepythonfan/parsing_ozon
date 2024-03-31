@@ -19,4 +19,13 @@ parser/schemas/__pycache__
 bot/__pycache__
 bot/handlers/__pycache__
 bot/misc/__pycache__
+bot/dependencies/__pycache__
+bot/services/__pycache__
+bot/keyboard/__pycache__
 local_lab
+.ipynb_checkpoints
+mongo/
+data
+tf_detector
+docker/tf_detector.Dockerfile
+docker-compose-dev.yml

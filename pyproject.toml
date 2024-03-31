@@ -11,6 +11,8 @@ python = ">=3.10,<3.11"
 
 [tool.poetry.group.dev.dependencies]
 jupyterlab = "^4.0.10"
+keras-cv = "^0.8.2"
+matplotlib = "^3.8.3"
 
 
 [tool.poetry.group.guru.dependencies]
@@ -37,17 +39,19 @@ celery = "^5.3.6"
 redis = "^5.0.1"
 aiohttp = "^3.9.1"
 python-multipart = "^0.0.6"
+pymongo = "^4.6.2"
+pillow = "^10.2.0"
 
 
 
 [tool.poetry.group.bot.dependencies]
 aiogram = "^3.3.0"
+pymongo = "^4.6.2"
 
 
 
 [tool.poetry.group.cv.dependencies]
 tensorflow = "2.15"
-opencv-python = "^4.9.0.80"
 
 [[tool.poetry.source]]
 name = "pytorch-cpu"
