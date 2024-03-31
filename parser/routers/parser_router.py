@@ -2,7 +2,7 @@ import re
 import asyncio
 import random
 from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from playwright.async_api import async_playwright as pl
 from parser.schemas import ParseObject
 from parser.services import ParserService
@@ -22,5 +22,11 @@ async def parse(
 ):
     async with parser() as browser:
         browser: ParserService
-        await browser.parse(product.article)
-        return browser.return_links()
+        await browser.parse(article=product.article, user_id=product.user_id)
+        if await browser.return_links():
+            return {"message": "all links send to detector"}
+        else:
+            raise HTTPException(
+                status_code=432,
+                detail="Detector not found"
+            )

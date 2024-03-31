@@ -1,8 +1,10 @@
 import asyncio
 import re
 import random
+import aiohttp
 from playwright.async_api import async_playwright
 from fastapi.exceptions import HTTPException
+from parser.config import DETECTOR, TOKEN
 
 
 class ParserService:
@@ -24,10 +26,18 @@ class ParserService:
         }, scrollInterval);
     '''
     wc = [f"/wc{i}00/" for i in range(1, 10)]
+    tg_feedback_url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
 
     def __init__(self) -> None:
         self.links = dict()
+
+
+    async def feedback_call(self, message: str):
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.tg_feedback_url, json={"chat_id": self.user_id, "text": message}) as resp:
+                if resp.status != 200:
+                    print("Сообщение не доставлено")
 
 
     async def _new_page(self):
@@ -64,27 +74,25 @@ class ParserService:
                 self.links[hashed_thumb] = el
 
 
-    async def parse(self, article: int):
+    async def parse(self, article: int, user_id: int):
         self.url = "https://www.ozon.ru/product/" + str(article)
+        self.user_id = user_id
+        await self.feedback_call(f"Парсер принял запрос, артикул {article}")
 
         page = await self._new_page()
         await page.goto(self.url, wait_until="load")
-        await asyncio.sleep(5)
+        await self.feedback_call("Загрузил страницу!")
+        await asyncio.sleep(15)
 
         try:
-            await page.evaluate(self.scroll_down)
-            await page.locator('div[style*="grid-template-columns: repeat(9, minmax(56px, 90px));"]').click(delay=1)
-
-            await asyncio.sleep(1.7)
-        except TimeoutError:
-            print("RELOAD PAGE")
+            await self.feedback_call("Перезагружаем страницу, так надо...")
             await page.reload()
 
+            await asyncio.sleep(1.5)
+
             await page.evaluate(self.scroll_down)
             await page.locator('div[style*="grid-template-columns: repeat(9, minmax(56px, 90px));"]').click(delay=1)
 
-            await asyncio.sleep(1.7)
-        finally:
             counter = 0
             links_lenght = 0
 
@@ -92,6 +100,7 @@ class ParserService:
                 links_lenght = len(self.links)
                 await self._parse_html(page=page)
                 print(f"EARN {len(self.links)} LINKS")
+                await self.feedback_call(f"Собрано {len(self.links)} фотографии!")
                 await page.keyboard.press("PageDown", delay=0.8)
                 sleep = random.uniform(1.5, 3.5)
                 await asyncio.sleep(sleep)
@@ -100,19 +109,38 @@ class ParserService:
                 else:
                     counter = 0
                 if counter > 3:
+                    await self.feedback_call(f"Собраны все фотоозывы!")
                     break
 
             await page.close()
 
+        except Exception:
+            await self.feedback_call("Невозможно загрузить отзывы! Попробуйте позже!")
+            await page.close()
+            raise HTTPException(
+                status_code=436,
+                detail="Unavailable reviews"
+            )
 
-    def return_links(self):
+
+
+    async def return_links(self):
         for resolution in self.wc:
             for link in self.links:
                 address = self.links[link]
                 if resolution in address:
                     self.links[link] = address.replace(resolution, "/wc1200/")
-
-        return self.links
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                f"http://{DETECTOR}:9090/model/detect",
+                json={
+                    "user_id": self.user_id,
+                    "images": list(self.links.values())
+                }
+            ) as resp:
+                if resp.status == 200:
+                    return True
 
 
     async def __aenter__(self):
