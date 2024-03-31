@@ -2,8 +2,8 @@ from io import BytesIO
 from typing import Annotated
 from fastapi import APIRouter, Depends, File
 from detector.misc import get_pic, send_to_user, user_feedback
-from detector.services import ModelService
-from detector.dependencies import get_model_service
+from detector.services import ModelService, PymongoService
+from detector.dependencies import get_model_service, get_mongo_service
 from detector.schemas import InputImages
 from PIL import Image
 
@@ -18,6 +18,7 @@ router = APIRouter(
 async def detect_person(
     input: InputImages,
     model: Annotated[ModelService, Depends(get_model_service)],
+    mongo: Annotated[PymongoService, Depends(get_mongo_service)],
 ) -> dict:
     """Accept dict with `user_id` and links of images.
     
@@ -37,6 +38,10 @@ async def detect_person(
                 "type": "photo",
                 "media": url
             })
+            mongo.add_pic(link=url, yolo=True, article=input.article)
+        else:
+            mongo.add_pic(link=url, yolo=False, article=input.article)
+        
         if len(humans) == 10:
             await send_to_user(input.user_id, humans)
             humans = []

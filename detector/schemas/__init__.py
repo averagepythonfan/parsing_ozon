@@ -1,1 +1,1 @@
-from .schemas import InputImages
+from .schemas import InputImages, Picture
