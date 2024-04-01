@@ -1,1 +1,1 @@
-from .schemas import InputImages, Picture
+from .schemas import InputImages, Picture, MongoArticles

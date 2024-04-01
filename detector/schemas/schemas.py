@@ -5,8 +5,14 @@ from pydantic import BaseModel
 
 class InputImages(BaseModel):
     user_id: Optional[int] = None
+    ozon: Optional[bool] = False
     images: List[str]
     article: int
+
+
+class MongoArticles(BaseModel):
+    articles: Optional[List[int]] = None
+    ozon: Optional[bool] = None
 
 
 class Picture(BaseModel):

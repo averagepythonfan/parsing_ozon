@@ -38,10 +38,20 @@ async def detect_person(
                 "type": "photo",
                 "media": url
             })
-            mongo.add_pic(link=url, yolo=True, article=input.article)
+            mongo.add_pic(
+                link=url,
+                yolo=True,
+                article=input.article,
+                ozon=input.ozon
+            )
         else:
-            mongo.add_pic(link=url, yolo=False, article=input.article)
-        
+            mongo.add_pic(
+                link=url,
+                yolo=False,
+                article=input.article,
+                ozon=input.ozon
+            )
+
         if len(humans) == 10:
             await send_to_user(input.user_id, humans)
             humans = []
