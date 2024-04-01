@@ -1,6 +1,11 @@
 from typing import Optional
 import aiohttp
+from bson import ObjectId
 from bot.config import PARSER, TF_DETECTOR
+import os
+from pathlib import Path
+from PIL.Image import open
+from io import BytesIO
 
 
 async def send_parse_request(user_id: int, article: int):
@@ -38,3 +43,10 @@ async def send_pic_to_detector(file_path: str) -> Optional[bool]:
             else:
                 pic.close()
 
+
+def save_pic(link: str, obj_id: ObjectId, human: bool):
+
+    path = '/tmp/data/'
+
+    if not os.path.exists(path=path):
+        os.mkdir(path=path)

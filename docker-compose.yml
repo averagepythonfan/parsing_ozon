@@ -11,6 +11,7 @@ services:
       - "27017:27017"
     volumes:
       - ./mongo/data:/data/db
+  # yolo-8 detector
   detector:
     image: detector:pymongo-v1.0
     container_name: detector

@@ -11,5 +11,8 @@ mongourl:
 detectorurl:
 	docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' detector
 
-dc_dev:
+dc_dev_up:
 	docker compose -f docker-compose-dev.yml up -d
+
+dc_dev_down:
+	docker compose -f docker-compose-dev.yml down
