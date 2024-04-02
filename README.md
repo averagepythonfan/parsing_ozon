@@ -12,6 +12,17 @@
 4. docker и docker compose, установка для [Windows](https://docs.docker.com/desktop/install/windows-install/)
 
 
+## Установка проекта (командная строка)
+1. git clone https://github.com/averagepythonfan/parsing_ozon.git
+2. poetry install --no-root --only local
+3. poetry run playwright install firefox
+4. jupyter lab
+
+
+## Схема проекта
+![Общая схема](docs/github/schema.jpg)
+
+
 ## Ozon Reviews Parser
 
  - Prerequirements: python 3.10, poetry (pip install poetry)
