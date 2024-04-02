@@ -6,10 +6,10 @@
 
 ## Предустановки:
 Чтобы запустить проект вам понадобиться:
-1. установленный git, (официальный сайт)[https://git-scm.com/]
-2. python версии 3.10 и выше, (сайт)[https://www.python.org/]
-3. затем вам нужна библиотека poetry, после установки python можно воспользоваться командой `pip install poetry`, или перейти по (ссылке)[https://python-poetry.org/docs/]
-4. docker и docker compose, установка для (Windows)[https://docs.docker.com/desktop/install/windows-install/]
+1. установленный git, [официальный сайт](https://git-scm.com/)
+2. python версии 3.10 и выше, [сайт](https://www.python.org/)
+3. затем вам нужна библиотека poetry, после установки python можно воспользоваться командой `pip install poetry`, или перейти по [ссылке](https://python-poetry.org/docs/)
+4. docker и docker compose, установка для [Windows](https://docs.docker.com/desktop/install/windows-install/)
 
 
 ## Ozon Reviews Parser
