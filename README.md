@@ -1,3 +1,17 @@
+## Парсер отзывов Ozon
+
+Данный репозитории реализовывает скрипт позволяющий парсить фото-отзывы на Ozon.
+Так же есть реализация детектора Yolos-Tiny, который позволяет распознавать на фото людей.
+
+
+## Предустановки:
+Чтобы запустить проект вам понадобиться:
+1. установленный git, (официальный сайт)[https://git-scm.com/]
+2. python версии 3.10 и выше, (сайт)[https://www.python.org/]
+3. затем вам нужна библиотека poetry, после установки python можно воспользоваться командой `pip install poetry`, или перейти по (ссылке)[https://python-poetry.org/docs/]
+4. docker и docker compose, установка для (Windows)[https://docs.docker.com/desktop/install/windows-install/]
+
+
 ## Ozon Reviews Parser
 
  - Prerequirements: python 3.10, poetry (pip install poetry)

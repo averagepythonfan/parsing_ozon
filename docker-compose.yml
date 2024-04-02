@@ -19,14 +19,6 @@ services:
       TOKEN: ${TOKEN}
       MONGO: mongodb://root:secret@mongodb:27017
     restart: on-failure
-    deploy:
-      resources:
-        limits:
-          cpus: "1.25"
-          memory: 4096M
-        reservations:
-          cpus: "0.25"
-          memory: 1024M
     volumes:
       - "./detector:/app/detector"
     ports:
